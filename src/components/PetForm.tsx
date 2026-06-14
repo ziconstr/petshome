@@ -1,15 +1,39 @@
 import { useState } from "react";
+import { PetFormData } from "../api/pets";
 
 const SIZES = ["Small", "Medium", "Large", "Extra Large"];
 const STATUSES = ["Available", "Pending", "Adopted"];
 const GENDERS = ["Male", "Female", "Unknown"];
 
-export default function PetForm({ initialData = {}, onSubmit, loading, error, submitLabel = "Save" }) {
-  const [form, setForm] = useState({
+interface PetFormProps {
+  initialData?: Partial<PetFormData & { image: { url: string; alt: string } }>;
+  onSubmit: (data: PetFormData) => void;
+  loading: boolean;
+  error: string;
+  submitLabel?: string;
+}
+
+interface FormState {
+  name: string;
+  species: string;
+  breed: string;
+  age: string;
+  gender: string;
+  size: string;
+  color: string;
+  description: string;
+  adoptionStatus: string;
+  location: string;
+  imageUrl: string;
+  imageAlt: string;
+}
+
+export default function PetForm({ initialData = {}, onSubmit, loading, error, submitLabel = "Save" }: PetFormProps) {
+  const [form, setForm] = useState<FormState>({
     name: initialData.name || "",
     species: initialData.species || "",
     breed: initialData.breed || "",
-    age: initialData.age || "",
+    age: initialData.age?.toString() || "",
     gender: initialData.gender || "Unknown",
     size: initialData.size || "Medium",
     color: initialData.color || "",
@@ -20,13 +44,13 @@ export default function PetForm({ initialData = {}, onSubmit, loading, error, su
     imageAlt: initialData.image?.alt || "",
   });
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const data = {
+    const data: PetFormData = {
       name: form.name,
       species: form.species,
       breed: form.breed,
@@ -44,9 +68,8 @@ export default function PetForm({ initialData = {}, onSubmit, loading, error, su
     onSubmit(data);
   }
 
-  const inputClass =
-    "w-full border border-stone-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-stone-800 bg-white";
-  const labelClass = "block text-sm font-semibold text-stone-600 mb-1";
+  const inputClass = "w-full border border-sky-100 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-400 text-slate-800 bg-white";
+  const labelClass = "block text-sm font-semibold text-slate-600 mb-1";
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -120,7 +143,7 @@ export default function PetForm({ initialData = {}, onSubmit, loading, error, su
       <button
         type="submit"
         disabled={loading}
-        className="bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-50"
+        className="bg-sky-600 text-white font-semibold py-3 rounded-xl hover:bg-sky-700 transition-colors disabled:opacity-50"
       >
         {loading ? "Saving..." : submitLabel}
       </button>
