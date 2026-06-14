@@ -55,7 +55,7 @@ export default function HomePage() {
       {/* Hero */}
       <div className="relative h-[420px] sm:h-[520px] overflow-hidden">
         <img
-          src="/src/components"
+          src="/public/bg_header.jpg"
           alt="Happy dog together"
           className="w-full h-full object-cover object-center"
         />
