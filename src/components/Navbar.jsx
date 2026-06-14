@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const { user, logoutUser } = useAuth();
@@ -9,23 +9,23 @@ export default function Navbar() {
 
   function handleLogout() {
     logoutUser();
-    navigate("/");
+    navigate('/');
     setMenuOpen(false);
   }
 
   return (
     <nav className="bg-white border-b border-stone-200 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
-          <span className="text-2xl">🐾</span>
-          <span style={{ fontFamily: "var(--font-display)" }} className="text-xl font-bold text-emerald-700">
-            PetsHome
-          </span>
+        <Link to="/" onClick={() => setMenuOpen(false)}>
+          <img src="/logo.png" alt="PetsHome" className="h-20 w-auto" />
         </Link>
 
         {/* Desktop menu */}
         <div className="hidden sm:flex items-center gap-4">
-          <Link to="/" className="text-stone-600 hover:text-emerald-700 font-semibold transition-colors">
+          <Link
+            to="/"
+            className="text-stone-600 hover:text-emerald-700 font-semibold transition-colors"
+          >
             Browse
           </Link>
           {user ? (
@@ -45,7 +45,10 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link to="/account/login" className="text-stone-600 hover:text-emerald-700 font-semibold transition-colors">
+              <Link
+                to="/account/login"
+                className="text-stone-600 hover:text-emerald-700 font-semibold transition-colors"
+              >
                 Login
               </Link>
               <Link
@@ -64,9 +67,15 @@ export default function Navbar() {
           onClick={() => setMenuOpen((prev) => !prev)}
           aria-label="Toggle menu"
         >
-          <span className={`block w-6 h-0.5 bg-stone-700 transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-          <span className={`block w-6 h-0.5 bg-stone-700 transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`block w-6 h-0.5 bg-stone-700 transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          <span
+            className={`block w-6 h-0.5 bg-stone-700 transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}
+          />
+          <span
+            className={`block w-6 h-0.5 bg-stone-700 transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}
+          />
+          <span
+            className={`block w-6 h-0.5 bg-stone-700 transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}
+          />
         </button>
       </div>
 
